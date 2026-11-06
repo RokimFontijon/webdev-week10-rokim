@@ -1,30 +1,22 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+class Venue extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    protected $fillable = ['name', 'address', 'capacity'];
+
+    public function events(): HasMany
     {
-        Schema::create('venues', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->unsignedInteger('capacity');
-            $table->timestamps();
-        });
+        return $this->hasMany(Event::class);
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function notes(): MorphMany
     {
-        Schema::dropIfExists('venues');
+        return $this->morphMany(Note::class, 'notable');
     }
-};
+}
