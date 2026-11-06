@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('venues', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('address');
+            $table->unsignedInteger('capacity');
             $table->timestamps();
         });
     }
